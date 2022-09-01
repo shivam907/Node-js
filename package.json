@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://Shivam907: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@github.com/shivam907/Node-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivam907/Node-js/issues"
+  },
+  "homepage": "https://github.com/shivam907/Node-js#readme",
+  "dependencies": {
+    "node-fetch": "^3.2.10"
+  }
+}
