@@ -20,10 +20,33 @@ MongoClient.connect(
     }
     console.log("Connected");
     const db = client.db(database);
-    db.collection("users").insertOne({
-      name: "shivam",
-      age: 19,
-    });
+    db.collection("users").insertMany(
+      [
+        {
+          name: "shivam",
+          age: 19,
+        },
+        {
+          name: "shivam",
+          age: "20",
+        },
+        {
+          name: "shivam",
+          age: 21,
+        },
+      ],
+      (error, result) => {
+        if (error) {
+          return console.log("Error");
+        }
+        console.log(result.acknowledged);
+      }
+    );
+    db.collection("users")
+      .find({ name: "shivam" })
+      .toArray((_, users) => {
+        console.log(users);
+      });
   }
 );
 const routers = require("./routes/mainRoutes");
