@@ -1,18 +1,27 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+
+const mongoose = require("mongoose");
 const validator = require("validator");
 
 const app = express();
-const mongoose = require("mongoose");
-const routers = require("./routes/mainRoutes");
+const homeRouters = require("./routes/mainRoutes");
+const userRoutes = require("./routes/getUsers");
+const taskRoutes = require("./routes/getTask");
+
+const User = require("./models/User");
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(routers);
+app.use(homeRouters);
+app.use(userRoutes);
+app.use(taskRoutes);
 // app.listen(1235);
 mongoose.connect(
   "mongodb+srv://shivam:1234@cluster0.ljlrg2q.mongodb.net/?retryWrites=true&w=majority",
@@ -21,59 +30,28 @@ mongoose.connect(
     // useCreateIndex: true,
   }
 );
+app.listen(1235);
 
-const User = mongoose.model("User", {
-  name: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-  email: {
-    type: String,
-    trim: true,
-    required: true,
-    validate(value) {
-      if (!validator.isEmail(value)) {
-        throw new Error("Email is invalid");
-      }
-    },
-  },
-  age: {
-    type: Number,
-    trim: true,
-    validate(value) {
-      if (!value > 18) {
-        throw new Error("Age less than 18");
-      }
-    },
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 7,
-    validate(value) {
-      if (value.includes("password")) {
-        throw new Error("password wrong");
-      }
-    },
-  },
-});
+// const me = new User({
+//   name: "cez",
+//   email: "cez@c.com",
+//   age: 99,
+//   password: "Sh  iv@9",
+// });
 
-const me = new User({
-  name: "shivam",
-  email: "shivam@c.com",
-  age: 19,
-  password: "Sh  iv@9",
-});
+// me.save()
+//   .then((res) => {
+//     console.log(res);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
 
-me.save()
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+// app.post("/users", (req, res, next) => {
+//   console.log(req.body);
+//   res.send("Testing");
+// });
+
 // const MongoClient = mongodb.MongoClient;
 
 // const connectionUrl =
