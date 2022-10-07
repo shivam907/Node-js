@@ -20,8 +20,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(homeRouters);
-app.use(userRoutes);
-app.use(taskRoutes);
+
+app.use(userRoutes.getRoutes);
+app.use(userRoutes.getUserRoutes);
+app.use(userRoutes.postRoutes);
+
+app.use(taskRoutes.getRoutes);
+app.use(taskRoutes.postRoutes);
 // app.listen(1235);
 mongoose.connect(
   "mongodb+srv://shivam:1234@cluster0.ljlrg2q.mongodb.net/?retryWrites=true&w=majority",
